@@ -134,11 +134,34 @@ export default function App() {
     if (permission === "granted") sendTestNotif();
   };
 
-  const sendTestNotif = () => {
-    new Notification(`🇯🇵 오늘의 ${selectedLevel} 단어`, {
-      body: `${todayWord.word}（${todayWord.reading}）— ${todayWord.meaning}`,
-      icon: "/logo192.png",
-    });
+  const sendTestNotif = async () => {
+    if (Notification.permission !== "granted") {
+      await requestNotification();
+      return;
+    }
+    try {
+      // Service Worker 통해서 알림 보내기 (PWA 앱에서 작동)
+      const reg = await navigator.serviceWorker.getRegistration();
+      if (reg) {
+        await reg.showNotification(`🇯🇵 오늘의 ${selectedLevel} 단어`, {
+          body: `${todayWord.word}（${todayWord.reading}）— ${todayWord.meaning}`,
+          icon: "/logo192.png",
+          badge: "/logo192.png",
+          vibrate: [200, 100, 200],
+        });
+      } else {
+        // SW 없으면 일반 방식으로 fallback
+        new Notification(`🇯🇵 오늘의 ${selectedLevel} 단어`, {
+          body: `${todayWord.word}（${todayWord.reading}）— ${todayWord.meaning}`,
+          icon: "/logo192.png",
+        });
+      }
+    } catch (e) {
+      // 마지막 fallback
+      new Notification(`🇯🇵 오늘의 ${selectedLevel} 단어`, {
+        body: `${todayWord.word}（${todayWord.reading}）— ${todayWord.meaning}`,
+      });
+    }
   };
 
   const todayDate = new Date().toLocaleDateString("ko-KR", {
