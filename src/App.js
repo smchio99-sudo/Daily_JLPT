@@ -255,10 +255,10 @@ export default function App() {
         </div>
         <div className={`word-answer ${showAnswer ? "visible" : ""}`}>
           <div className="word-meaning">{todayWord.meaning}</div>
-          {todayWord.pronunciation && (
-            <div className="word-pronunciation">{todayWord.pronunciation}</div>
-          )}
         </div>
+        {showAnswer && todayWord.pronunciation && (
+          <div className="word-pronunciation">{todayWord.pronunciation}</div>
+        )}
         {!showAnswer && <p className="tap-hint">탭해서 뜻 보기</p>}
         <button className="tts-btn-word" onClick={(e) => { e.stopPropagation(); speak(todayWord.word); }}>🔊 발음 듣기</button>
       </div>
