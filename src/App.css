@@ -585,3 +585,12 @@ body {
   color: var(--gray);
   font-weight: 500;
 }
+
+/* 한국어 발음 */
+.word-pronunciation {
+  font-size: 15px;
+  color: var(--gray);
+  font-weight: 500;
+  margin-top: 4px;
+  letter-spacing: 0.5px;
+}
