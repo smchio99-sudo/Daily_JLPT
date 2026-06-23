@@ -277,18 +277,6 @@ export default function App() {
         {todayChecked ? "✅ 오늘 학습 완료!" : "오늘 학습 완료"}
       </button>
 
-      {/* 진행도 */}
-      <div className="progress-section">
-        <div className="progress-header">
-          <span>{selectedLevel} 진행도</span>
-          <span>{getTodayIndex(words.length) + 1} / {words.length}</span>
-        </div>
-        <div className="progress-bar">
-          <div className="progress-fill"
-            style={{ width: `${((getTodayIndex(words.length) + 1) / words.length) * 100}%` }} />
-        </div>
-      </div>
-
       {notifPermission !== "granted" && (
         <div className="notif-banner" onClick={requestNotification}>
           🔔 매일 알림을 받으려면 탭하세요
